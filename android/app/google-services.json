@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "479178180291",
+    "project_id": "jurisps",
+    "storage_bucket": "jurisps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479178180291:android:42c30e95ca4d925cff8476",
+        "android_client_info": {
+          "package_name": "com.mycompany.dashboard"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3hGNiupEV9T6ftNw-0zcDE7mOPxT_I7U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
