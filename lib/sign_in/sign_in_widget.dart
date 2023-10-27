@@ -554,16 +554,8 @@ class _SignInWidgetState extends State<SignInWidget> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 FFButtonWidget(
-                                  onPressed: () async {
-                                    GoRouter.of(context).prepareAuthEvent();
-                                    final user = await authManager
-                                        .signInAnonymously(context);
-                                    if (user == null) {
-                                      return;
-                                    }
-
-                                    context.goNamedAuth(
-                                        'homePage', context.mounted);
+                                  onPressed: () {
+                                    print('Button-Login pressed ...');
                                   },
                                   text: 'Continue as Guest',
                                   options: FFButtonOptions(
@@ -587,9 +579,9 @@ class _SignInWidgetState extends State<SignInWidget> {
                                 ),
                                 FFButtonWidget(
                                   onPressed: () async {
-                                    context.pushNamed('tipoProcesso');
+                                    context.pushNamed('listar');
                                   },
-                                  text: 'Continue as Guest',
+                                  text: 'Tipo de Processo',
                                   options: FFButtonOptions(
                                     width: 270.0,
                                     height: 50.0,

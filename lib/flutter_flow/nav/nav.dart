@@ -139,11 +139,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                   : ProfilePageWidget(),
             ),
             FFRoute(
-              name: 'tipoProcesso',
-              path: 'tipoProcesso',
+              name: 'listar',
+              path: 'listar',
               builder: (context, params) => params.isEmpty
-                  ? NavBarPage(initialPage: 'tipoProcesso')
-                  : TipoProcessoWidget(),
+                  ? NavBarPage(initialPage: 'listar')
+                  : ListarWidget(),
+            ),
+            FFRoute(
+              name: 'adicionar',
+              path: 'adicionar',
+              builder: (context, params) => AdicionarWidget(
+                id: params.getParam('id', ParamType.int),
+                nome: params.getParam('nome', ParamType.String),
+              ),
             )
           ].map((r) => r.toRoute(appStateNotifier)).toList(),
         ),
