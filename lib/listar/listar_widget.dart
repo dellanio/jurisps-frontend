@@ -8,25 +8,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'tipo_processo_model.dart';
-export 'tipo_processo_model.dart';
+import 'listar_model.dart';
+export 'listar_model.dart';
 
-class TipoProcessoWidget extends StatefulWidget {
-  const TipoProcessoWidget({Key? key}) : super(key: key);
+class ListarWidget extends StatefulWidget {
+  const ListarWidget({Key? key}) : super(key: key);
 
   @override
-  _TipoProcessoWidgetState createState() => _TipoProcessoWidgetState();
+  _ListarWidgetState createState() => _ListarWidgetState();
 }
 
-class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
-  late TipoProcessoModel _model;
+class _ListarWidgetState extends State<ListarWidget> {
+  late ListarModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => TipoProcessoModel());
+    _model = createModel(context, () => ListarModel());
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -50,7 +50,7 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
     }
 
     return FutureBuilder<ApiCallResponse>(
-      future: GetPostsCall.call(),
+      future: ListaTipoProcessosCall.call(),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -69,7 +69,7 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
             ),
           );
         }
-        final tipoProcessoGetPostsResponse = snapshot.data!;
+        final listarListaTipoProcessosResponse = snapshot.data!;
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -280,7 +280,7 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
                                             child: Builder(
                                               builder: (context) {
                                                 final listaPost =
-                                                    tipoProcessoGetPostsResponse
+                                                    listarListaTipoProcessosResponse
                                                         .jsonBody
                                                         .toList();
                                                 return DataTable2(
@@ -290,7 +290,7 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
                                                           .merge(
                                                         softWrap: true,
                                                         child: Text(
-                                                          'user ID',
+                                                          'ID',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelLarge,
@@ -302,31 +302,7 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
                                                           .merge(
                                                         softWrap: true,
                                                         child: Text(
-                                                          'Edit Header 2',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelLarge,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    DataColumn2(
-                                                      label: DefaultTextStyle
-                                                          .merge(
-                                                        softWrap: true,
-                                                        child: Text(
-                                                          'Edit Header 3',
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .labelLarge,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    DataColumn2(
-                                                      label: DefaultTextStyle
-                                                          .merge(
-                                                        softWrap: true,
-                                                        child: Text(
-                                                          'Edit Header 4',
+                                                          'Nome',
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .labelLarge,
@@ -341,38 +317,157 @@ class _TipoProcessoWidgetState extends State<TipoProcessoWidget> {
                                                             Text(
                                                               getJsonField(
                                                                 listaPostItem,
-                                                                r'''$.userId''',
-                                                              ).toString(),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                            Text(
-                                                              getJsonField(
-                                                                listaPostItem,
                                                                 r'''$.id''',
                                                               ).toString(),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium,
                                                             ),
-                                                            Text(
-                                                              getJsonField(
-                                                                listaPostItem,
-                                                                r'''$.title''',
-                                                              ).toString(),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                            Text(
-                                                              getJsonField(
-                                                                listaPostItem,
-                                                                r'''$.body''',
-                                                              ).toString(),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
+                                                            Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              children: [
+                                                                Text(
+                                                                  getJsonField(
+                                                                    listaPostItem,
+                                                                    r'''$.nome''',
+                                                                  ).toString(),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium,
+                                                                ),
+                                                                FFButtonWidget(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    var _shouldSetState =
+                                                                        false;
+
+                                                                    context
+                                                                        .pushNamed(
+                                                                      'adicionar',
+                                                                      queryParameters:
+                                                                          {
+                                                                        'id':
+                                                                            serializeParam(
+                                                                          getJsonField(
+                                                                            listaPostItem,
+                                                                            r'''$.id''',
+                                                                          ),
+                                                                          ParamType
+                                                                              .int,
+                                                                        ),
+                                                                        'nome':
+                                                                            serializeParam(
+                                                                          getJsonField(
+                                                                            listaPostItem,
+                                                                            r'''$.nome''',
+                                                                          ).toString(),
+                                                                          ParamType
+                                                                              .String,
+                                                                        ),
+                                                                      }.withoutNulls,
+                                                                    );
+
+                                                                    _model.apiResultv7g =
+                                                                        await GetTipoProcessoIdCall
+                                                                            .call(
+                                                                      idBusca:
+                                                                          getJsonField(
+                                                                        listarListaTipoProcessosResponse
+                                                                            .jsonBody,
+                                                                        r'''$.id''',
+                                                                      ),
+                                                                    );
+                                                                    _shouldSetState =
+                                                                        true;
+                                                                    if ((_model
+                                                                            .apiResultv7g
+                                                                            ?.succeeded ??
+                                                                        true)) {
+                                                                      ScaffoldMessenger.of(
+                                                                              context)
+                                                                          .showSnackBar(
+                                                                        SnackBar(
+                                                                          content:
+                                                                              Text(
+                                                                            'Encontrado com sucesso',
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: FlutterFlowTheme.of(context).primaryText,
+                                                                            ),
+                                                                          ),
+                                                                          duration:
+                                                                              Duration(milliseconds: 4000),
+                                                                          backgroundColor:
+                                                                              FlutterFlowTheme.of(context).secondary,
+                                                                        ),
+                                                                      );
+                                                                    } else {
+                                                                      if (_shouldSetState)
+                                                                        setState(
+                                                                            () {});
+                                                                      return;
+                                                                    }
+
+                                                                    if (_shouldSetState)
+                                                                      setState(
+                                                                          () {});
+                                                                  },
+                                                                  text: '',
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .arrow_forward_ios_outlined,
+                                                                    size: 15.0,
+                                                                  ),
+                                                                  options:
+                                                                      FFButtonOptions(
+                                                                    height:
+                                                                        40.0,
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            24.0,
+                                                                            0.0,
+                                                                            24.0,
+                                                                            0.0),
+                                                                    iconPadding:
+                                                                        EdgeInsetsDirectional.fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                    textStyle: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleSmall
+                                                                        .override(
+                                                                          fontFamily:
+                                                                              FlutterFlowTheme.of(context).titleSmallFamily,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          useGoogleFonts:
+                                                                              GoogleFonts.asMap().containsKey(FlutterFlowTheme.of(context).titleSmallFamily),
+                                                                        ),
+                                                                    elevation:
+                                                                        3.0,
+                                                                    borderSide:
+                                                                        BorderSide(
+                                                                      color: Colors
+                                                                          .transparent,
+                                                                      width:
+                                                                          1.0,
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            8.0),
+                                                                  ),
+                                                                ),
+                                                              ],
                                                             ),
                                                           ]
                                                               .map((c) =>

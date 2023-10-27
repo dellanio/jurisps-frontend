@@ -8,13 +8,19 @@ export 'api_manager.dart' show ApiCallResponse;
 
 const _kPrivateApiFunctionName = 'ffPrivateApiCall';
 
-class GetPostsCall {
-  static Future<ApiCallResponse> call() async {
+class GetTipoProcessoIdCall {
+  static Future<ApiCallResponse> call({
+    int? idBusca,
+  }) async {
     return ApiManager.instance.makeApiCall(
-      callName: 'getPosts',
-      apiUrl: 'https://jsonplaceholder.typicode.com/posts',
+      callName: 'getTipoProcessoId',
+      apiUrl:
+          'https://hguxgywwaauhyaxwzntj.supabase.co/rest/v1/tipo_processo?id=eq.${idBusca}&select=*',
       callType: ApiCallType.GET,
-      headers: {},
+      headers: {
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndXhneXd3YWF1aHlheHd6bnRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgzMjU1ODYsImV4cCI6MjAxMzkwMTU4Nn0.lkDDjuRjJ9ETfmKy8ox2KUl5FqWpCEq1TrmItNvobn4',
+      },
       params: {},
       returnBody: true,
       encodeBodyUtf8: false,
@@ -22,27 +28,25 @@ class GetPostsCall {
       cache: false,
     );
   }
+}
 
-  static dynamic userID(dynamic response) => getJsonField(
-        response,
-        r'''$[:].userId''',
-        true,
-      );
-  static dynamic id(dynamic response) => getJsonField(
-        response,
-        r'''$[:].id''',
-        true,
-      );
-  static dynamic title(dynamic response) => getJsonField(
-        response,
-        r'''$[:].title''',
-        true,
-      );
-  static dynamic body(dynamic response) => getJsonField(
-        response,
-        r'''$[:].body''',
-        true,
-      );
+class ListaTipoProcessosCall {
+  static Future<ApiCallResponse> call() async {
+    return ApiManager.instance.makeApiCall(
+      callName: 'listaTipoProcessos',
+      apiUrl: 'https://hguxgywwaauhyaxwzntj.supabase.co/rest/v1/tipo_processo',
+      callType: ApiCallType.GET,
+      headers: {
+        'apikey':
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhndXhneXd3YWF1aHlheHd6bnRqIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTgzMjU1ODYsImV4cCI6MjAxMzkwMTU4Nn0.lkDDjuRjJ9ETfmKy8ox2KUl5FqWpCEq1TrmItNvobn4',
+      },
+      params: {},
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
 }
 
 class ApiPagingParams {

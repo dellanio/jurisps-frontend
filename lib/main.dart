@@ -130,7 +130,7 @@ class _NavBarPageState extends State<NavBarPage> {
       'homePage': HomePageWidget(),
       'courses': CoursesWidget(),
       'profilePage': ProfilePageWidget(),
-      'tipoProcesso': TipoProcessoWidget(),
+      'listar': ListarWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
